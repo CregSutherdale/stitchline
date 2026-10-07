@@ -1,5 +1,5 @@
-const V='stitchline-6e33e5ad5a';
-const CORE=['./','./app.6e33e5ad5a.js','./gen.6e33e5ad5a.js','./manifest.webmanifest','./icon-180.png','./icon-192.png'];
+const V='stitchline-07c818a443';
+const CORE=['./','./app.07c818a443.js','./gen.07c818a443.js','./manifest.webmanifest','./icon-180.png','./icon-192.png'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(V).then(c=>c.addAll(CORE)).then(()=>self.skipWaiting()));});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k.startsWith('stitchline-')&&k!==V).map(k=>caches.delete(k)))).then(()=>self.clients.claim()));});
 self.addEventListener('fetch',e=>{
