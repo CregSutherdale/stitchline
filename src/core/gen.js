@@ -3,7 +3,7 @@
 // Fully deterministic for a given seed (no wall-clock cutoffs, only node budgets), so Node and every
 // browser produce byte-identical puzzles.
 import { makeRng } from './rng.js';
-import { buildModel, solve, grade, checkPathRules, isStraightAt } from './logic.js';
+import { buildModel, solve, grade, checkPathRules, isStraightAt, seamCrossings } from './logic.js';
 
 function neighbors(n, c) {
   const r = (c / n) | 0, k = c % n, out = [];
@@ -104,9 +104,13 @@ function candidates(n, path) {
 
 function puzzleOf(base, set) {
   const p = { n: base.n, pins: base.pins, start: base.start, knot: set.knot ? base.end : -1, straight: [], corner: [], nums: [] };
+  const eyes = [], seams = [];
   for (const k of set.items) {
     if (k.t === 's') p.straight.push(k.c); else if (k.t === 'c') p.corner.push(k.c); else if (k.t === 'n') p.nums.push(k);
+    else if (k.t === 'e') eyes.push({ c: k.c, d: k.d }); else if (k.t === 'm') seams.push({ o: k.o, k: k.k, a: k.a, b: k.b, n: k.n });
   }
+  if (eyes.length) p.eyes = eyes.sort((a, b) => a.c - b.c);
+  if (seams.length) p.seams = seams.sort((a, b) => (a.o + a.k).localeCompare(b.o + b.k) || a.a - b.a);
   p.nums.sort((a, b) => a.i - b.i);
   p.nums = p.nums.map((k) => k.c);
   p.straight.sort((a, b) => a - b); p.corner.sort((a, b) => a - b);
@@ -137,7 +141,18 @@ export function generate(params, seed) {
     const base = { n, pins, start: path[0], end: path[path.length - 1], path };
     const cand = candidates(n, path);
     const items = [];
-    if (types.s) for (const c of cand.straight) items.push({ t: 's', c });
+    if (types.e) {
+      // Straight holes become either a white bead or a needle's eye (direction of travel).
+      const D = [-n, 1, n, -1];
+      const straightSet = new Set(cand.straight);
+      for (let i = 1; i < path.length - 1; i++) {
+        const c = path[i];
+        if (!isStraightAt(path, i, n)) continue;
+        const useEye = !types.s || !straightSet.has(c) || rng.next() < (params.eyeShare ?? 0.5);
+        if (useEye) { items.push({ t: 'e', c, d: D.indexOf(path[i + 1] - c) }); straightSet.delete(c); }
+      }
+      if (types.s) for (const c of straightSet) items.push({ t: 's', c });
+    } else if (types.s) for (const c of cand.straight) items.push({ t: 's', c });
     if (types.c) for (const c of cand.corner) items.push({ t: 'c', c });
     if (types.n && params.nums) {
       const k = Math.min(params.nums, Math.max(2, Math.floor(path.length / 8)));
@@ -147,6 +162,20 @@ export function generate(params, seed) {
         i = Math.max(1, Math.min(path.length - 2, i));
         if (used.has(path[i])) continue;
         used.add(path[i]); items.push({ t: 'n', c: path[i], i });
+      }
+    }
+    if (types.m) {
+      // Seams: segments between two rows (h) or two columns (v); one per boundary line.
+      const lines = [];
+      for (let k = 0; k < n - 1; k++) { lines.push(['h', k]); lines.push(['v', k]); }
+      rng.shuffle(lines);
+      const count = Math.min(lines.length, params.seams ?? Math.ceil(n / 2));
+      for (let j = 0; j < count; j++) {
+        const [o, k] = lines[j];
+        const len = Math.max(3, Math.min(n, 3 + rng.int(n - 2)));
+        const a = rng.int(n - len + 1), b = a + len - 1;
+        const sm = { o, k, a, b };
+        items.push({ t: 'm', ...sm, n: seamCrossings(n, sm, path), c: -1 - j });
       }
     }
     const set = { knot: params.knot !== 'never', items: items.slice() };

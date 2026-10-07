@@ -1,5 +1,5 @@
 // One puzzle being played: the thread path, undo history, hints and live clue status.
-import { checkPathRules } from './core/logic.js';
+import { checkPathRules, seamCrossings } from './core/logic.js';
 
 export class Session {
   constructor(p, saved) {
@@ -11,6 +11,8 @@ export class Session {
     for (const c of p.straight) this.clue.set(c, 's');
     for (const c of p.corner) this.clue.set(c, 'c');
     this.numAt = new Map(p.nums.map((c, i) => [c, i + 1]));
+    this.eyes = new Map((p.eyes || []).map((e) => [e.c, e.d]));
+    this.seams = p.seams || [];
     this.path = saved && Array.isArray(saved.path) && saved.path[0] === p.start && this.validPrefix(saved.path) ? saved.path.slice() : [p.start];
     this.undoStack = [];
     this.hinted = new Set(Array.isArray(saved?.hinted) ? saved.hinted : []); // indices of revealed segments
@@ -116,6 +118,14 @@ export class Session {
         else if (isEnd(i - 1) || isEnd(i + 1)) out.set(c, 'bad');
       }
     }
+    const D = [-n, 1, n, -1];
+    for (const [c, d] of this.eyes) {
+      const i = pos.get(c);
+      if (i === undefined) continue;
+      if (i === 0 || (full && i === L - 1)) { out.set(c, 'bad'); continue; }
+      if (P[i] - P[i - 1] !== D[d]) { out.set(c, 'bad'); continue; }
+      if (i < L - 1) out.set(c, P[i + 1] - P[i] === D[d] ? 'ok' : 'bad');
+    }
     let expect = 1;
     for (let i = 0; i < L; i++) {
       const k = this.numAt.get(P[i]);
@@ -130,6 +140,15 @@ export class Session {
     }
     for (const [k, v] of out) if (v === null) out.delete(k);
     return out;
+  }
+  // Per seam: 'ok' (count reached), 'bad' (over, or finished with the wrong count) or null.
+  seamStatus() {
+    const full = this.full;
+    return this.seams.map((sm) => {
+      const k = seamCrossings(this.n, sm, this.path);
+      if (k > sm.n || (full && k !== sm.n)) return 'bad';
+      return k === sm.n ? 'ok' : null;
+    });
   }
 }
 

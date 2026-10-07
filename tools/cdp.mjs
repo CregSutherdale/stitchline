@@ -13,16 +13,13 @@ export async function launch({ w = 390, h = 844, dpr = 3, mobile = true, timeout
     '--mute-audio', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--disable-extensions', '--disable-sync', '--disable-component-update',
     '--disable-background-networking', '--disable-background-timer-throttling', '--disable-renderer-backgrounding', 'about:blank'], { stdio: ['ignore', 'ignore', 'pipe'] });
   let closed = false;
+  const ownPids = [];
   const kill = () => {
     if (closed) return; closed = true;
     try { execSync(`taskkill /PID ${proc.pid} /T /F`, { stdio: 'ignore' }); } catch (e) { /* gone */ }
-    // Edge's launcher exits and leaves the real browser detached: kill only msedge processes whose
-    // command line carries OUR unique profile dir.
-    try {
-      const tag = path.basename(profile).replace(/'/g, '');
-      const ps = `Get-CimInstance Win32_Process -Filter "Name='msedge.exe'" | Where-Object { $_.CommandLine -like '*${tag}*' } | ForEach-Object { Stop-Process -Id $_.ProcessId -Force -ErrorAction SilentlyContinue }`;
-      execFileSync('powershell', ['-NoProfile', '-NonInteractive', '-Command', ps], { stdio: 'ignore' });
-    } catch (e) { /* none left */ }
+    // Edge's launcher exits and leaves the real browser detached: kill the browser PIDs we recorded
+    // right after launch (processes carrying OUR unique profile dir). Never kill by name/pattern.
+    for (const pid of ownPids) { try { execSync(`taskkill /PID ${pid} /T /F`, { stdio: 'ignore' }); } catch (e) { /* gone */ } }
     try { fs.rmSync(profile, { recursive: true, force: true, maxRetries: 20, retryDelay: 200 }); } catch (e) { /* locked */ }
   };
   process.on('exit', kill);
@@ -39,6 +36,11 @@ export async function launch({ w = 390, h = 844, dpr = 3, mobile = true, timeout
     }, 200);
     setTimeout(() => clearInterval(poll), 31000);
   });
+  try {
+    const tag = path.basename(profile);
+    const out = execFileSync('powershell', ['-NoProfile', '-NonInteractive', '-Command', `Get-CimInstance Win32_Process -Filter "Name='msedge.exe' OR Name='chrome.exe'" | Where-Object { $_.CommandLine -like '*${tag}*' -and $_.CommandLine -notlike '*--type=*' } | ForEach-Object { $_.ProcessId }`], { encoding: 'utf8' });
+    for (const l of out.split(/\s+/)) if (/^\d+$/.test(l)) ownPids.push(+l);
+  } catch (e) { /* query failed: fall back to launcher PID only */ }
   const tab = await (await fetch(`http://127.0.0.1:${new URL(wsUrl).port}/json/new?about:blank`, { method: 'PUT' })).json();
   const ws = new WebSocket(tab.webSocketDebuggerUrl);
   await new Promise((r) => ws.addEventListener('open', r, { once: true }));

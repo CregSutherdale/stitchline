@@ -17,4 +17,9 @@ export const ICON = {
   close: S('<path d="M6 6l12 12M18 6L6 18"/>'),
   thimble: S('<path d="M7 20h10l-1.2-11a3.8 3.8 0 00-7.6 0z"/><path d="M6.5 20h11"/><path d="M9.5 11h.01M12 11h.01M14.5 11h.01M9 14h.01M11.5 14h.01M14 14h.01M15.5 17h.01M8.5 17h.01M12 17h.01"/>'),
   spool: S('<path d="M6 4h12M6 20h12"/><path d="M8 4v16M16 4v16"/><path d="M8 8l8 2M8 12l8 2M8 16l8 2"/>'),
+  chart: S('<path d="M4 20h16"/><rect x="6" y="11" width="3" height="7" rx="1"/><rect x="11" y="6" width="3" height="12" rx="1"/><rect x="16" y="9" width="3" height="9" rx="1"/>'),
+  box: S('<path d="M6.5 4.5a2 2 0 012-2h7a2 2 0 012 2v0a2 2 0 01-2 2h-7a2 2 0 01-2-2z"/><path d="M8 6.5v11M16 6.5v11"/><path d="M6.5 19.5a2 2 0 002 2h7a2 2 0 002-2v0a2 2 0 00-2-2h-7a2 2 0 00-2 2z"/><path d="M8 9.5l8 2.2M8 13l8 2.2"/>'),
+  quilt: S('<rect x="3.5" y="3.5" width="17" height="17" rx="2"/><path d="M9.2 3.5v17M14.8 3.5v17M3.5 9.2h17M3.5 14.8h17"/>'),
+  left: S('<path d="M15 5l-7 7 7 7"/>'),
+  right: S('<path d="M9 5l7 7-7 7"/>'),
 };

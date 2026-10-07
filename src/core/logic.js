@@ -39,10 +39,23 @@ export function buildModel(p) {
   for (const c of p.corner || []) clue[c] = 2;
   const num = new Int32Array(NC);
   (p.nums || []).forEach((c, k) => { num[c] = k + 1; });
+  // needle's eye: clue 3, dir = direction of travel (0 up,1 right,2 down,3 left)
+  const eyeDir = new Int8Array(NC).fill(-1);
+  for (const e of p.eyes || []) { clue[e.c] = 3; eyeDir[e.c] = e.d; }
   const clueCells = [];
   for (let i = 0; i < NC; i++) if (clue[i]) clueCells.push(i);
+  // seams: the set of edges crossing each seam segment, and the exact crossing count
+  const seams = (p.seams || []).map((sm) => {
+    const es = [];
+    for (let t = sm.a; t <= sm.b; t++) {
+      const cell = sm.o === 'h' ? sm.k * n + t : t * n + sm.k;
+      const e = dirEdge[cell * 4 + (sm.o === 'h' ? 2 : 1)];
+      if (e >= 0) es.push(e);
+    }
+    return { edges: Int32Array.from(es), n: sm.n };
+  });
   const nb = (c, d) => { const r = (c / n) | 0, cc = c % n, rr = r + DR[d], c2 = cc + DC[d]; return (rr < 0 || rr >= n || c2 < 0 || c2 >= n) ? -1 : rr * n + c2; };
-  const m0 = { n, dirEdge, vEdge, clue, nb };
+  const m0 = { n, dirEdge, vEdge, clue, nb, eyeDir };
   const blank = new Int8Array(ea.length).fill(-1);
   for (const e of forced) blank[e] = 1;
   // Static per-clue combos, flattened as (edge<<1 | value); validity is checked against the live state.
@@ -52,7 +65,7 @@ export function buildModel(p) {
     return Int32Array.from([...mp].map(([e, v]) => (e << 1) | v));
   }));
   return {
-    clueCombosStatic, cntOn: new Int32Array(ea.length), cntOff: new Int32Array(ea.length),
+    seams, eyeDir, eyeCount: (p.eyes || []).length, clueCombosStatic, cntOn: new Int32Array(ea.length), cntOff: new Int32Array(ea.length),
     p, n, NC, V, NN, pin, open, E: ea.length, ea: Int32Array.from(ea), eb: Int32Array.from(eb), virt: Uint8Array.from(virt),
     dirEdge, vEdge, nodeEdges: nodeEdges.map((a) => Int32Array.from(a)), start, knot, forced, clue, clueCells, num,
     numCount: (p.nums || []).length, nb,
@@ -97,6 +110,12 @@ function clueCombos(m, s, c, out) {
         out.push(base.concat(a.as, b.as));
       }
     }
+  } else if (t === 3) {
+    const d1 = m.eyeDir[c] & 1 ? 1 : 0, d2 = d1 + 2; // axis of travel
+    const as = [];
+    for (let d = 0; d < 4; d++) { const e = de[c * 4 + d]; if (e >= 0) as.push(e, (d === d1 || d === d2) ? 1 : 0); }
+    if (ve[c] >= 0) as.push(ve[c], 0);
+    if (de[c * 4 + d1] >= 0 && de[c * 4 + d2] >= 0 && comboOk(s, as)) out.push(as);
   } else if (t === 2) {
     for (let d1 = 0; d1 < 4; d1++) {
       const d2 = (d1 + 1) & 3;
@@ -194,6 +213,14 @@ export function propagate(m, s, stats) {
       }
     }
     if (changed) continue;
+    // 2b. seams: exact crossing counts
+    for (let k = 0; k < m.seams.length; k++) {
+      const sm = m.seams[k]; let on = 0, unk = 0;
+      for (let i = 0; i < sm.edges.length; i++) { const x = s[sm.edges[i]]; if (x === 1) on++; else if (x === -1) unk++; }
+      if (on > sm.n || on + unk < sm.n) return false;
+      if (unk && (on === sm.n || on + unk === sm.n)) { const v = on === sm.n ? 0 : 1; for (let i = 0; i < sm.edges.length; i++) if (s[sm.edges[i]] === -1) s[sm.edges[i]] = v; changed = true; }
+    }
+    if (changed) continue;
     // 3. cycles: union on-edges; premature cycle = contradiction; closing edges -> off
     const par = st.parent, sz = st.size;
     for (let v = 0; v < NN; v++) { par[v] = v; sz[v] = 1; }
@@ -228,6 +255,7 @@ export function propagate(m, s, stats) {
     }
     // 5. numbers (chain order)
     if (m.numCount > 0 && !checkNumbers(m, s)) return false;
+    if (m.eyeCount > 0 && !checkEyes(m, s)) return false;
   }
   if (stats) stats.props++;
   return true;
@@ -268,6 +296,46 @@ function checkNumbers(m, s) {
     }
   }
   // a fully closed chain without ends would be a cycle; caught elsewhere
+  return true;
+}
+
+// Needle's eyes fix the direction of travel. Every chain of placed thread gets orientation "votes"
+// from its eyes, the needle, the thread end and its numbers; all votes on one chain must agree.
+const DD = (n) => [-n, 1, n, -1];
+function checkEyes(m, s) {
+  const { NC, pin, dirEdge, vEdge, num, ea, eb, eyeDir, n } = m;
+  const st = uf(m); const seen = st.seen; seen.fill(0, 0, NC);
+  const dd = DD(n);
+  const realDeg = (c) => { let d = 0; for (let k = 0; k < 4; k++) { const e = dirEdge[c * 4 + k]; if (e >= 0 && s[e] === 1) d++; } return d; };
+  for (let c0 = 0; c0 < NC; c0++) {
+    if (pin[c0] || seen[c0] || realDeg(c0) > 1) continue;
+    const chain = [];
+    let prev = -1, cur = c0;
+    while (cur >= 0) {
+      seen[cur] = 1; chain.push(cur);
+      let nx = -1;
+      for (let k = 0; k < 4; k++) { const e = dirEdge[cur * 4 + k]; if (e >= 0 && s[e] === 1) { const w = ea[e] === cur ? eb[e] : ea[e]; if (w !== prev) { nx = w; break; } } }
+      prev = cur; cur = nx;
+    }
+    if (chain.length < 2) continue;
+    let vote = 0, hasEye = false;
+    const cast = (v) => { if (vote && vote !== v) return false; vote = v; return true; };
+    const L = chain.length;
+    for (let j = 0; j < L; j++) {
+      const c = chain[j]; if (eyeDir[c] < 0) continue; hasEye = true;
+      const D = dd[eyeDir[c]];
+      if (j > 0) { if (chain[j - 1] === c - D) { if (!cast(1)) return false; } else if (chain[j - 1] === c + D) { if (!cast(-1)) return false; } }
+      if (j < L - 1) { if (chain[j + 1] === c + D) { if (!cast(1)) return false; } else if (chain[j + 1] === c - D) { if (!cast(-1)) return false; } }
+    }
+    if (!hasEye) continue;
+    if (chain[0] === m.start && !cast(1)) return false;
+    if (chain[L - 1] === m.start && !cast(-1)) return false;
+    const isEnd = (c) => c !== m.start && vEdge[c] >= 0 && s[vEdge[c]] === 1;
+    if (isEnd(chain[L - 1]) && !cast(1)) return false;
+    if (isEnd(chain[0]) && !cast(-1)) return false;
+    let a = -1;
+    for (let j = 0; j < L; j++) if (num[chain[j]]) { if (a >= 0) { if (!cast(num[chain[j]] > num[chain[a]] ? 1 : -1)) return false; break; } a = j; }
+  }
   return true;
 }
 
@@ -365,6 +433,12 @@ export function checkPathRules(p, path) {
   }
   let last = -1;
   for (const c of p.nums || []) { const i = pos.get(c); if (i === undefined || i <= last) return false; last = i; }
+  const D = [-n, 1, n, -1];
+  for (const e of p.eyes || []) {
+    const i = pos.get(e.c); if (i === undefined || i === 0 || i === path.length - 1) return false;
+    if (path[i] - path[i - 1] !== D[e.d] || path[i + 1] - path[i] !== D[e.d]) return false;
+  }
+  for (const sm of p.seams || []) if (seamCrossings(n, sm, path) !== sm.n) return false;
   return true;
 }
 export function isStraightAt(path, i, n) {
@@ -406,4 +480,16 @@ export function grade(m, opts = {}) {
   // Score: deduction steps weighted by how hidden each was, plus a heavy term if search was needed.
   g.score = Math.round(10 * (g.hidden + (g.level === 2 ? 25 + 6 * Math.log2(1 + g.searchNodes) : 0) + 0.02 * m.open)) / 10;
   return g;
+}
+
+// How many times a path crosses a seam segment.
+export function seamCrossings(n, sm, path) {
+  let k = 0;
+  for (let i = 1; i < path.length; i++) {
+    const a = Math.min(path[i - 1], path[i]), b = Math.max(path[i - 1], path[i]);
+    const ra = (a / n) | 0, ca = a % n;
+    if (sm.o === 'h') { if (b - a === n && ra === sm.k && ca >= sm.a && ca <= sm.b) k++; }
+    else if (b - a === 1 && ca === sm.k && ra >= sm.a && ra <= sm.b) k++;
+  }
+  return k;
 }

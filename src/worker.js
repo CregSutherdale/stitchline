@@ -5,8 +5,16 @@ import { dailyParams, ENDLESS, pickCandidate } from './core/campaign.js';
 export function makeDaily(key) {
   const d = dailyParams(key);
   const cands = [];
-  for (let k = 0; k < d.K; k++) cands.push(generate(d.params, `daily:${key}:${k}`));
-  return pickCandidate(cands, 'max');
+  for (let k = 0; k < d.K; k++) {
+    const c = generate(d.params, `daily:${key}:${k}`);
+    if (!c) continue;
+    c.tries = k + 1;
+    if (d.band && c.diff.score >= d.band[0] && c.diff.score <= d.band[1]) return c; // first in band
+    cands.push(c);
+  }
+  if (!d.band) return pickCandidate(cands, 'max');
+  const mid = (d.band[0] + d.band[1]) / 2;
+  return pickCandidate(cands, mid); // never happened in the 60-date gate; closest to the band
 }
 export function makeEndless(diff, seed) {
   const e = ENDLESS[diff];

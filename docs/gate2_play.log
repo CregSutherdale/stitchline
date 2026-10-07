@@ -3,9 +3,14 @@ PASS  level 1 solved by touch drag (21 holes)  win=true saved=true
 PASS  level 2 solved by mouse drag (21 holes)  win=true saved=true
 PASS  level 3 solved by touch drag (20 holes)  win=true saved=true
 PASS  level 25 (8x8) solved by touch drag
+PASS  level 121 (7x7, 9 eyes, 0 seams, tutorial card + drag-hint ghost shown) solved by touch
+PASS  level 126 (7x7, 0 eyes, 3 seams) solved by touch
+PASS  level 132 (10x10, 5 eyes, 4 seams) solved by touch
+PASS  needle's eye travelled backwards is flagged red
 PASS  saves persist after reload (levels + quilt blocks)
 PASS  erratic pass: 120 random actions, state valid, no stuck drag  path=6
 PASS  after the erratic pass, level 39 (10x10) still solvable by touch
 PASS  0 console errors
 
-GATE 2 PASS: 8/8 checks
+GATE 2 PASS: 12/12 checks
+GATE2 EXIT 0

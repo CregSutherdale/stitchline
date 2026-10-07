@@ -12,7 +12,7 @@ import crypto from 'node:crypto';
 const common = { bundle: true, minify: true, target: ['es2020', 'safari15'], write: false, legalComments: 'none', loader: { '.json': 'json' } };
 const app = await esbuild.build({ ...common, entryPoints: ['src/main.js'], format: 'iife' });
 const wk = await esbuild.build({ ...common, entryPoints: ['src/worker.js'], format: 'iife' });
-const css = fs.readFileSync('src/style.css', 'utf8');
+const css = fs.readFileSync('src/style.css', 'utf8') + fs.readFileSync('src/style2.css', 'utf8');
 const js = app.outputFiles[0].text, wjs = wk.outputFiles[0].text;
 const hash = crypto.createHash('sha1').update(js).update(wjs).update(css).digest('hex').slice(0, 10);
 const appName = `app.${hash}.js`, wName = `gen.${hash}.js`;

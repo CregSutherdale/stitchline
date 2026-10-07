@@ -52,12 +52,19 @@ function ok() { return soundOn && ctx() && ac.state === 'running'; }
 
 export const sfx = {
   // Each new hole: a soft fabric "thup" + a plucked note that climbs with progress.
-  stitch(progress) {
+  // The melody climbs with progress; the stitch COUNT varies it so long threads never loop the same
+  // note: alternate timbres per stitch, a soft harmony every 5th, a little bell every 10th.
+  stitch(progress, count = 0) {
     if (!ok()) return; const t = ac.currentTime;
-    const step = SCALE[Math.min(SCALE.length - 1, Math.floor(progress * (SCALE.length - 1)))];
-    noise(t, 0.035, { vol: 0.12, freq: 1800, q: 0.8 });
-    tone(midi(67 + step), t, 0.16, { type: 'triangle', vol: 0.22 });
+    const base = SCALE[Math.min(SCALE.length - 1, Math.floor(progress * (SCALE.length - 1)))];
+    const wobble = [0, 2, 0, -3, 0, 4][count % 6] || 0;
+    const step = Math.max(0, base + (SCALE.includes(base + wobble) ? wobble : 0));
+    const vel = 0.18 + 0.06 * ((count % 4) / 3);
+    noise(t, 0.035, { vol: 0.1 + 0.04 * (count % 2), freq: 1500 + 400 * (count % 3), q: 0.8 });
+    tone(midi(67 + step), t, 0.16, { type: count % 2 ? 'triangle' : 'sine', vol: vel, cutoff: 2500 + progress * 5000 });
     tone(midi(79 + step), t, 0.07, { type: 'sine', vol: 0.05 });
+    if (count > 0 && count % 5 === 0) tone(midi(71 + step), t + 0.02, 0.22, { type: 'sine', vol: 0.06 });
+    if (count > 0 && count % 10 === 0) { tone(midi(91 + (step % 12)), t + 0.05, 0.5, { type: 'sine', vol: 0.05 }); tone(midi(98 + (step % 12)), t + 0.08, 0.4, { type: 'sine', vol: 0.03 }); }
   },
   back() { if (!ok()) return; const t = ac.currentTime; tone(midi(62), t, 0.09, { type: 'sine', vol: 0.12, bend: 0.8 }); noise(t, 0.02, { vol: 0.05, freq: 900 }); },
   clueOk() { if (!ok()) return; const t = ac.currentTime; tone(midi(88), t, 0.35, { type: 'sine', vol: 0.06 }); tone(midi(95), t + 0.05, 0.4, { type: 'sine', vol: 0.04 }); },

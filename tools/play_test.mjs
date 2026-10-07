@@ -68,6 +68,24 @@ try {
   await dragPath(bsol, { sub: 3, jitter: 3 });
   const bwon = await winShown();
   ok(`level ${big} (${bn}x${bn}) solved by touch drag`, bwon && await saved(big));
+  // ---- round 2 clue types by real touch: needle's-eye tutorial + a 10x10 with seams and eyes ----
+  const newIds = await b.evaluate(`[121, 126, __stitchApp.levels.find(l=>l.id>131 && l.seams && l.seams.length && l.eyes && l.eyes.length && l.n===10).id]`);
+  for (const id of newIds) {
+    await b.evaluate(`document.querySelectorAll('.sheet-bg').forEach(e=>e.remove()); __stitchApp.openLevel(${id}); 1`);
+    await b.waitFor(`window.__stitch && __stitch.cfg.id === ${id}`);
+    await sleep(700);
+    const info = await b.evaluate(`(()=>{const p=__stitch.session.p; return {n:p.n, e:(p.eyes||[]).length, m:(p.seams||[]).length, ghost: !!__stitch.board.ghost, chips: document.querySelectorAll('.lchip').length, card: !!document.querySelector('.teach-card')}})()`);
+    const nsol = await b.evaluate('__stitch.session.p.sol');
+    await dragPath(nsol, { sub: 3, jitter: 2 });
+    const w = await winShown();
+    ok(`level ${id} (${info.n}x${info.n}, ${info.e} eyes, ${info.m} seams${id === 121 ? ', tutorial card + drag-hint ghost ' + (info.card && info.ghost ? 'shown' : 'MISSING') : ''}) solved by touch`, w && await saved(id) && ((id !== 121 && id !== 126) || (info.card && info.ghost)));
+    await sleep(1000);
+  }
+  // wrong direction through a needle's eye must be flagged red, never accepted
+  await b.evaluate(`document.querySelectorAll('.sheet-bg').forEach(e=>e.remove()); __stitchApp.openLevel(121); 1`);
+  await b.waitFor('window.__stitch && __stitch.cfg.id === 121'); await sleep(400);
+  const eyeBad = await b.evaluate(`(()=>{const s=__stitch.session, e=s.p.eyes[0], n=s.n, D=[-n,1,n,-1][e.d]; s.path=[s.p.start]; s.path=[e.c+D, e.c, e.c-D].filter(c=>c>=0&&c<n*n); return s.status().get(e.c)})()`);
+  ok("needle's eye travelled backwards is flagged red", eyeBad === 'bad');
   // ---- persistence across reload ----
   await b.goto(BASE + '?nosw', 1500);
   await b.waitFor('window.__stitchApp');

@@ -1,0 +1,21 @@
+PASS  unit: schema bumped to v2
+PASS  unit: every level record (stars, best, hints) kept  1,2,3
+PASS  unit: quilt blocks kept (path, pins, time) + first-sewn time added
+PASS  unit: hints, daily streak + solved days kept
+PASS  unit: in-progress level kept  campaign:4 path 9
+PASS  unit: settings kept (music off), clock defaults to time taken
+PASS  unit: stats seeded from existing solves
+PASS  unit: migrating twice is stable
+serving C:\Users\kyle_\Projects\stitchline\dist on http://localhost:5317/
+PASS  browser: save loaded + migrated in place (v2 written back)
+PASS  browser: raw v1 backup kept
+PASS  browser: levels/stars/best times intact
+PASS  browser: quilt blocks + hints + daily intact
+PASS  browser: home shows the old progress  Stitchline A threading puzzle for patient hands Continue Level 4 · Calico 9 Daily Stitch Solved today 1-day Endless Medium to Expert Levels 3 of 180 stitched Qu
+PASS  browser: half-threaded level 4 resumes where she left it  path 9
+PASS  browser: Quilt Chest renders her blocks
+PASS  browser: Daily calendar marks the solved day
+PASS  browser: 0 console errors
+
+MIGRATION GATE PASS: 17/17 (fixture from live build 6e33e5ad5a, captured 2026-10-07T01:38:11.834Z)
+MIGRATION EXIT 0

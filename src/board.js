@@ -1,6 +1,6 @@
 // Board view: renders the fabric, holes, clues and the thread, and turns pointer/touch drags into
 // thread moves (snap to holes, interpolate fast swipes, drag back along the thread to unpick).
-import { BOARDS, PAL, linenTile, eyelet, pinHead, pearl, darkButton, woodButton, knotMark, needle, sparkle, yarn, roundRect, PIN_COLORS, shade } from './art.js';
+import { BOARDS, PAL, linenTile, eyelet, pinHead, pearl, darkButton, woodButton, knotMark, needle, sparkle, yarn, roundRect, PIN_COLORS, shade, needleEye, seamLine, seamTag } from './art.js';
 import { makeRng } from './core/rng.js';
 
 export class Board {
@@ -41,7 +41,7 @@ export class Board {
     const n = this.session.n;
     const S = Math.min(r.width, r.height);
     this.S = S; this.bx = (r.width - S) / 2; this.by = (r.height - S) / 2;
-    const pad = S * 0.055 + S / n * 0.08;
+    const pad = S * 0.035 + S / n * 0.1;
     this.cs = (S - 2 * pad) / n;
     this.ox = this.bx + pad + this.cs / 2; this.oy = this.by + pad + this.cs / 2;
     this.buildStatic();
@@ -55,7 +55,7 @@ export class Board {
     const mk = () => { const c = document.createElement('canvas'); c.width = this.cv.width; c.height = this.cv.height; const x = c.getContext('2d'); x.scale(dpr, dpr); return [c, x]; };
     const [low, lx] = mk();
     const [top, tx] = mk();
-    const B = this.style.board;
+    const B = this.style.board; // { base, ... }
     // board: rounded fabric swatch with drop shadow, stitched border
     const { bx, by, S } = this;
     const rr = S * 0.045;
@@ -88,6 +88,16 @@ export class Board {
       if (r + 1 < n && !s.pins.has(i + n)) { lx.beginPath(); lx.moveTo(x, y); lx.lineTo(x, y + cs); lx.stroke(); }
     }
     lx.restore();
+    // seams (sewn into the fabric, under the thread)
+    this.seamGeo = (p.seams || []).map((sm) => {
+      let x1, y1, x2, y2;
+      if (sm.o === 'h') { const y = this.oy + (sm.k + 0.5) * cs; x1 = this.ox + (sm.a - 0.5) * cs; x2 = this.ox + (sm.b + 0.5) * cs; y1 = y2 = y; }
+      else { const x = this.ox + (sm.k + 0.5) * cs; y1 = this.oy + (sm.a - 0.5) * cs; y2 = this.oy + (sm.b + 0.5) * cs; x1 = x2 = x; }
+      seamLine(lx, x1, y1, x2, y2, Math.max(2, cs * 0.07), '#3f3550');
+      // tag sits just past the seam's start, outside the line, so crossings never hide it
+      const o = cs * 0.3;
+      return sm.o === 'h' ? { x: x1 - o, y: y1, n: sm.n } : { x: x1, y: y1 - o, n: sm.n };
+    });
     // holes
     const hr = Math.max(2.5, cs * 0.1);
     for (let i = 0; i < n * n; i++) { if (s.pins.has(i)) continue; const [x, y] = this.cellXY(i); eyelet(lx, x, y, hr); }
@@ -99,6 +109,8 @@ export class Board {
     for (const c of p.straight) { const [x, y] = this.cellXY(c); pearl(tx, x, y, cr); }
     for (const c of p.corner) { const [x, y] = this.cellXY(c); darkButton(tx, x, y, cr); }
     p.nums.forEach((c, k) => { const [x, y] = this.cellXY(c); woodButton(tx, x, y, cs * 0.3, k + 1); });
+    for (const e of p.eyes || []) { const [x, y] = this.cellXY(e.c); needleEye(tx, x, y, cs * 0.27, e.d); }
+    for (const g of this.seamGeo) seamTag(tx, g.x, g.y, cs * 0.4, g.n, null);
     this.low = low; this.top = top;
   }
 
@@ -285,6 +297,8 @@ export class Board {
         this.dirty = true;
       }
     }
+    // seam tags light up gold (count reached) or red (over / wrong at the end)
+    if (this.seamCache) this.seamCache.forEach((v, k) => { if (v) { const g = this.seamGeo[k]; seamTag(cx, g.x, g.y, cs * 0.4, g.n, v); } });
     // flashes
     for (let i = this.flashes.length - 1; i >= 0; i--) {
       const f = this.flashes[i]; const a = (t - f.t0) / f.dur;

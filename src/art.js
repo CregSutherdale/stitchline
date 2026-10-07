@@ -319,3 +319,77 @@ export function roundRect(ctx, x, y, w, h, r) {
 }
 
 export const PIN_COLORS = ['#d9534a', '#e6b53d', '#4f7fb8', '#6aa86b', '#b45fa0', '#f08a5d'];
+
+// Needle's eye clue: a silver eye laid along the axis of travel, with an arrow showing the direction.
+export function needleEye(ctx, x, y, r, dir) {
+  const ang = [-Math.PI / 2, 0, Math.PI / 2, Math.PI][dir];
+  ctx.save(); ctx.translate(x, y); ctx.rotate(ang);
+  ctx.fillStyle = 'rgba(0,0,0,0.28)'; ctx.beginPath(); ctx.ellipse(r * 0.06, r * 0.2, r * 1.15, r * 0.7, 0, 0, 7); ctx.fill();
+  const g = ctx.createLinearGradient(0, -r * 0.7, 0, r * 0.7);
+  g.addColorStop(0, '#ffffff'); g.addColorStop(0.45, '#cfd6dd'); g.addColorStop(1, '#7c8690');
+  ctx.fillStyle = g; ctx.beginPath(); ctx.ellipse(0, 0, r * 1.12, r * 0.66, 0, 0, 7); ctx.fill();
+  ctx.strokeStyle = 'rgba(50,60,70,0.55)'; ctx.lineWidth = Math.max(1, r * 0.07); ctx.stroke();
+  // the eye slot
+  ctx.fillStyle = '#2b2f36'; ctx.beginPath(); ctx.ellipse(-r * 0.12, 0, r * 0.62, r * 0.2, 0, 0, 7); ctx.fill();
+  // arrow head (direction of travel)
+  ctx.fillStyle = '#2b2f36';
+  ctx.beginPath(); ctx.moveTo(r * 1.0, 0); ctx.lineTo(r * 0.55, -r * 0.36); ctx.lineTo(r * 0.55, r * 0.36); ctx.closePath(); ctx.fill();
+  ctx.fillStyle = 'rgba(255,255,255,0.8)'; ctx.beginPath(); ctx.ellipse(-r * 0.35, -r * 0.38, r * 0.35, r * 0.09, 0, 0, 7); ctx.fill();
+  ctx.restore();
+}
+
+// Seam clue: a stitched seam line between two rows/columns, with a sewn-in tag carrying the count.
+// (x1,y1)-(x2,y2) is the seam; tag sits at the start end.
+export function seamLine(ctx, x1, y1, x2, y2, w, color) {
+  ctx.save();
+  ctx.lineCap = 'round';
+  ctx.strokeStyle = 'rgba(0,0,0,0.22)'; ctx.lineWidth = w * 1.3; ctx.beginPath(); ctx.moveTo(x1, y1 + w * 0.35); ctx.lineTo(x2, y2 + w * 0.35); ctx.stroke();
+  ctx.strokeStyle = shade(color, -0.25); ctx.lineWidth = w; ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke();
+  ctx.strokeStyle = color; ctx.lineWidth = w * 0.6; ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke();
+  // cross-stitches along the seam
+  const L = Math.hypot(x2 - x1, y2 - y1), ux = (x2 - x1) / L, uy = (y2 - y1) / L, step = w * 3.2;
+  ctx.strokeStyle = '#fff8ea'; ctx.lineWidth = Math.max(1, w * 0.28);
+  for (let t = step * 0.5; t < L; t += step) {
+    const cx = x1 + ux * t, cy = y1 + uy * t, a = w * 0.7;
+    ctx.beginPath(); ctx.moveTo(cx - a * (ux + uy), cy - a * (uy - ux)); ctx.lineTo(cx + a * (ux + uy), cy + a * (uy - ux)); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(cx - a * (ux - uy), cy - a * (uy + ux)); ctx.lineTo(cx + a * (ux - uy), cy + a * (uy + ux)); ctx.stroke();
+  }
+  ctx.restore();
+}
+export function seamTag(ctx, x, y, s, label, state) {
+  ctx.save();
+  ctx.fillStyle = 'rgba(0,0,0,0.25)'; roundRect(ctx, x - s * 0.62, y - s * 0.5 + s * 0.12, s * 1.24, s, s * 0.22); ctx.fill();
+  ctx.fillStyle = state === 'bad' ? '#f4c9c3' : state === 'ok' ? '#fbe7b0' : '#fbf4e6';
+  roundRect(ctx, x - s * 0.62, y - s * 0.5, s * 1.24, s, s * 0.22); ctx.fill();
+  ctx.strokeStyle = state === 'bad' ? '#c43c33' : state === 'ok' ? '#c48a1e' : 'rgba(80,55,50,0.55)';
+  ctx.lineWidth = Math.max(1, s * (state ? 0.1 : 0.06)); ctx.setLineDash(state ? [] : [s * 0.12, s * 0.09]); ctx.stroke(); ctx.setLineDash([]);
+  ctx.fillStyle = '#3a2b33'; ctx.font = `800 ${Math.round(s * 0.66)}px Nunito, system-ui, sans-serif`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  ctx.fillText(String(label), x, y + s * 0.04);
+  ctx.restore();
+}
+
+// Sewing box: thread colours and board fabrics unlocked by campaign stars.
+export const THREADS = [
+  { id: 'madder', name: 'Madder red', color: '#c9473e', stars: 0 },
+  { id: 'indigo', name: 'Indigo', color: '#3f5d8c', stars: 10 },
+  { id: 'marigold', name: 'Marigold', color: '#dd9124', stars: 25 },
+  { id: 'fern', name: 'Fern', color: '#4c8748', stars: 45 },
+  { id: 'plum', name: 'Plum', color: '#7d3d70', stars: 70 },
+  { id: 'teal', name: 'Teal', color: '#25807f', stars: 100 },
+  { id: 'rose', name: 'Rose', color: '#d4697a', stars: 140 },
+  { id: 'charcoal', name: 'Charcoal', color: '#3c3a42', stars: 190 },
+  { id: 'gold', name: 'Gold', color: '#c99a2e', stars: 260 },
+  { id: 'cream', name: 'Cream silk', color: '#efe2c4', stars: 350 },
+];
+export const FABRICS = [
+  { id: 'chapter', name: 'Chapter fabric', stars: 0 },
+  { id: 'sage', name: 'Sage linen', board: 0, stars: 5 },
+  { id: 'denim', name: 'Denim', board: 1, stars: 20 },
+  { id: 'heather', name: 'Heather', board: 2, stars: 35 },
+  { id: 'ochre', name: 'Ochre', board: 3, stars: 55 },
+  { id: 'teal', name: 'Teal', board: 4, stars: 80 },
+  { id: 'rosewood', name: 'Rosewood', board: 5, stars: 120 },
+  { id: 'moss', name: 'Moss', base: '#7e9a6b', stars: 165 },
+  { id: 'slate', name: 'Slate', base: '#7f8d9c', stars: 220 },
+  { id: 'clay', name: 'Clay', base: '#b98a6b', stars: 300 },
+];
