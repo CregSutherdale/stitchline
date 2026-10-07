@@ -1,0 +1,10 @@
+PASS  level 1 solved by touch drag (21 holes)  win=true saved=true
+PASS  level 2 solved by mouse drag (21 holes)  win=true saved=true
+PASS  level 3 solved by touch drag (20 holes)  win=true saved=true
+PASS  level 25 (8x8) solved by touch drag
+PASS  saves persist after reload (levels + quilt blocks)
+PASS  erratic pass: 120 random actions, state valid, no stuck drag  path=1
+PASS  after the erratic pass, level 39 (10x10) still solvable by touch
+PASS  0 console errors
+
+GATE 2 PASS: 8/8 checks
