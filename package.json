@@ -1,0 +1,23 @@
+{
+  "name": "stitchline",
+  "version": "1.0.0",
+  "description": "Stitchline: a cozy, genuinely hard threading puzzle (web, phone-first)",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "build": "node build.mjs",
+    "campaign": "node tools/build_campaign.mjs",
+    "test:puzzles": "node tools/test_puzzles.mjs",
+    "test:play": "node tools/play_test.mjs",
+    "shots": "node tools/shots.mjs",
+    "serve": "node tools/serve.mjs"
+  },
+  "author": "",
+  "license": "UNLICENSED",
+  "type": "module",
+  "devDependencies": {
+    "esbuild": "^0.28.2"
+  },
+  "private": true
+}

@@ -1,0 +1,148 @@
+50/1388 candidates, 0s
+100/1388 candidates, 1s
+150/1388 candidates, 1s
+200/1388 candidates, 1s
+250/1388 candidates, 2s
+300/1388 candidates, 2s
+350/1388 candidates, 3s
+400/1388 candidates, 3s
+450/1388 candidates, 4s
+500/1388 candidates, 5s
+550/1388 candidates, 7s
+600/1388 candidates, 9s
+650/1388 candidates, 16s
+700/1388 candidates, 24s
+750/1388 candidates, 30s
+800/1388 candidates, 36s
+850/1388 candidates, 50s
+900/1388 candidates, 56s
+950/1388 candidates, 60s
+1000/1388 candidates, 68s
+1050/1388 candidates, 77s
+1100/1388 candidates, 86s
+1150/1388 candidates, 95s
+1200/1388 candidates, 100s
+1250/1388 candidates, 110s
+1300/1388 candidates, 121s
+1350/1388 candidates, 133s
+wrote 120 levels in 162s
+L  1 src   1 5x5 pins 4 knot Y S0 C0 N0 score 0.4 lvl 0 search 0
+L  2 src   2 5x5 pins 4 knot Y S0 C0 N0 score 0.4 lvl 0 search 0
+L  3 src   3 5x5 pins 5 knot Y S0 C0 N0 score 0.4 lvl 0 search 0
+L  4 src   4 5x5 pins 4 knot - S0 C0 N0 score 0.4 lvl 0 search 0
+L  5 src   5 5x5 pins 0 knot Y S6 C0 N0 score 0.5 lvl 0 search 0
+L  6 src   6 5x5 pins 0 knot Y S5 C0 N0 score 0.5 lvl 0 search 0
+L  7 src   7 5x5 pins 0 knot Y S5 C0 N0 score 3.3 lvl 1 search 0
+L  8 src   8 6x6 pins 1 knot Y S6 C0 N0 score 10.5 lvl 1 search 0
+L  9 src   9 6x6 pins 0 knot Y S0 C4 N0 score 4.3 lvl 1 search 0
+L 10 src  14 6x6 pins 0 knot Y S9 C1 N0 score 0.7 lvl 0 search 0
+L 11 src  10 6x6 pins 0 knot Y S0 C3 N0 score 3.6 lvl 1 search 0
+L 12 src  11 6x6 pins 2 knot Y S0 C2 N0 score 3.9 lvl 1 search 0
+L 13 src  12 6x6 pins 1 knot Y S3 C1 N0 score 4.6 lvl 1 search 0
+L 14 src  13 6x6 pins 1 knot - S6 C3 N0 score 4.9 lvl 1 search 0
+L 15 src  15 6x6 pins 0 knot Y S7 C0 N2 score 4.6 lvl 1 search 0
+L 16 src  18 7x7 pins 0 knot Y S6 C2 N3 score 6.4 lvl 1 search 0
+L 17 src  17 6x6 pins 1 knot Y S3 C1 N0 score 16.2 lvl 1 search 0
+L 18 src  19 7x7 pins 2 knot - S5 C1 N1 score 17.7 lvl 1 search 0
+L 19 src  20 7x7 pins 0 knot Y S6 C0 N3 score 19.1 lvl 1 search 0
+L 20 src  16 6x6 pins 0 knot Y S5 C0 N0 score 20.1 lvl 1 search 0
+L 21 src  29 7x7 pins 0 knot - S5 C2 N0 score 21 lvl 1 search 0
+L 22 src  30 7x7 pins 1 knot - S5 C2 N0 score 21 lvl 1 search 0
+L 23 src  22 7x7 pins 0 knot - S7 C1 N0 score 24.3 lvl 1 search 0
+L 24 src  21 7x7 pins 0 knot - S11 C0 N0 score 29.5 lvl 1 search 0
+L 25 src  55 8x8 pins 0 knot - S9 C3 N0 score 29.5 lvl 1 search 0
+L 26 src  28 7x7 pins 1 knot - S3 C2 N0 score 34.9 lvl 1 search 0
+L 27 src  24 7x7 pins 1 knot - S6 C1 N0 score 37 lvl 1 search 0
+L 28 src  26 7x7 pins 2 knot - S9 C0 N0 score 39.4 lvl 1 search 0
+L 29 src  63 9x9 pins 1 knot - S13 C1 N0 score 40.1 lvl 1 search 0
+L 30 src  37 8x8 pins 0 knot Y S7 C1 N0 score 41.5 lvl 1 search 0
+L 31 src  35 8x8 pins 0 knot - S9 C2 N0 score 42.1 lvl 1 search 0
+L 32 src  23 7x7 pins 2 knot - S7 C1 N0 score 42.3 lvl 1 search 0
+L 33 src  50 9x9 pins 2 knot - S8 C3 N0 score 44.4 lvl 1 search 0
+L 34 src  87 9x9 pins 1 knot Y S10 C1 N0 score 44.4 lvl 1 search 0
+L 35 src  25 7x7 pins 1 knot - S7 C1 N0 score 45.9 lvl 1 search 0
+L 36 src  27 7x7 pins 1 knot - S3 C1 N3 score 49 lvl 1 search 0
+L 37 src  56 9x9 pins 2 knot Y S5 C4 N0 score 49.1 lvl 1 search 0
+L 38 src  36 8x8 pins 2 knot Y S8 C1 N2 score 50.5 lvl 1 search 0
+L 39 src  73 10x10 pins 3 knot - S14 C4 N0 score 55.5 lvl 1 search 0
+L 40 src  34 8x8 pins 0 knot - S7 C4 N0 score 57.7 lvl 1 search 0
+L 41 src  89 10x10 pins 1 knot Y S11 C2 N0 score 59.9 lvl 1 search 0
+L 42 src  32 8x8 pins 1 knot Y S8 C2 N0 score 60.5 lvl 2 search 29
+L 43 src  47 8x8 pins 2 knot - S11 C1 N0 score 60.6 lvl 1 search 0
+L 44 src  75 9x9 pins 2 knot - S10 C4 N0 score 60.6 lvl 1 search 0
+L 45 src  40 8x8 pins 2 knot - S7 C1 N0 score 62.6 lvl 1 search 0
+L 46 src  31 8x8 pins 0 knot - S10 C2 N0 score 65.1 lvl 1 search 0
+L 47 src  33 8x8 pins 0 knot - S10 C1 N2 score 66 lvl 1 search 0
+L 48 src  41 8x8 pins 0 knot - S8 C3 N0 score 66.8 lvl 1 search 0
+L 49 src  45 8x8 pins 1 knot - S2 C4 N0 score 66.9 lvl 1 search 0
+L 50 src  98 10x10 pins 1 knot Y S4 C7 N0 score 70.4 lvl 1 search 0
+L 51 src  43 8x8 pins 2 knot - S5 C3 N0 score 72.2 lvl 1 search 0
+L 52 src  59 8x8 pins 2 knot - S2 C4 N0 score 72.5 lvl 1 search 0
+L 53 src  81 9x9 pins 1 knot Y S8 C2 N0 score 73.4 lvl 1 search 0
+L 54 src  44 9x9 pins 3 knot - S8 C2 N3 score 73.9 lvl 2 search 61
+L 55 src  53 8x8 pins 0 knot - S5 C6 N0 score 81.5 lvl 1 search 0
+L 56 src  57 8x8 pins 1 knot - S5 C2 N0 score 81.6 lvl 1 search 0
+L 57 src  78 9x9 pins 3 knot - S8 C4 N0 score 82.7 lvl 1 search 0
+L 58 src  51 8x8 pins 1 knot - S4 C4 N0 score 83 lvl 1 search 0
+L 59 src  62 10x10 pins 2 knot - S14 C2 N0 score 85.2 lvl 2 search 25
+L 60 src  46 9x9 pins 1 knot - S8 C4 N0 score 88.1 lvl 1 search 0
+L 61 src  61 10x10 pins 0 knot Y S16 C2 N0 score 88.1 lvl 2 search 31
+L 62 src  48 9x9 pins 1 knot Y S10 C1 N3 score 89.3 lvl 2 search 75
+L 63 src  49 8x8 pins 3 knot - S5 C2 N0 score 90.2 lvl 1 search 0
+L 64 src  54 9x9 pins 3 knot - S6 C3 N0 score 92.6 lvl 1 search 0
+L 65 src  52 9x9 pins 0 knot - S10 C4 N0 score 93 lvl 1 search 0
+L 66 src  39 8x8 pins 0 knot Y S11 C1 N2 score 94.1 lvl 2 search 17
+L 67 src  66 9x9 pins 1 knot - S9 C5 N0 score 98.9 lvl 1 search 0
+L 68 src  64 10x10 pins 1 knot - S10 C4 N0 score 99.4 lvl 1 search 0
+L 69 src  68 10x10 pins 2 knot Y S11 C2 N2 score 102.3 lvl 2 search 291
+L 70 src  60 9x9 pins 0 knot Y S11 C3 N2 score 103.3 lvl 2 search 133
+L 71 src  77 10x10 pins 2 knot Y S18 C1 N0 score 105.3 lvl 2 search 17
+L 72 src  58 9x9 pins 2 knot - S8 C4 N0 score 112.2 lvl 2 search 219
+L 73 src  38 8x8 pins 0 knot - S8 C2 N0 score 116.2 lvl 2 search 67
+L 74 src  65 10x10 pins 0 knot Y S15 C3 N0 score 117 lvl 2 search 11
+L 75 src  67 10x10 pins 0 knot - S17 C3 N0 score 117.3 lvl 1 search 0
+L 76 src  84 9x9 pins 3 knot - S10 C1 N3 score 121.3 lvl 2 search 459
+L 77 src  42 9x9 pins 2 knot - S12 C2 N0 score 123.5 lvl 2 search 217
+L 78 src  72 9x9 pins 2 knot - S11 C2 N2 score 124.5 lvl 1 search 0
+L 79 src  76 10x10 pins 0 knot - S18 C2 N3 score 124.6 lvl 2 search 537
+L 80 src  74 10x10 pins 0 knot - S18 C2 N0 score 125.4 lvl 2 search 503
+L 81 src 101 10x10 pins 1 knot - S11 C5 N0 score 127.6 lvl 1 search 0
+L 82 src  69 9x9 pins 1 knot - S6 C4 N0 score 131.4 lvl 2 search 5041
+L 83 src 119 10x10 pins 0 knot - S18 C2 N0 score 132.3 lvl 2 search 521
+L 84 src 106 10x10 pins 1 knot - S10 C4 N0 score 133.6 lvl 2 search 5629
+L 85 src  82 10x10 pins 0 knot Y S15 C1 N0 score 133.8 lvl 2 search 593
+L 86 src  97 10x10 pins 1 knot - S11 C4 N0 score 136.6 lvl 2 search 445
+L 87 src  71 10x10 pins 0 knot - S21 C3 N0 score 138.9 lvl 2 search 1397
+L 88 src  88 10x10 pins 0 knot - S18 C2 N3 score 138.9 lvl 2 search 387
+L 89 src  90 9x9 pins 0 knot - S9 C3 N0 score 139.8 lvl 1 search 0
+L 90 src 105 10x10 pins 2 knot - S15 C3 N0 score 140.5 lvl 2 search 1605
+L 91 src  93 10x10 pins 0 knot - S15 C4 N0 score 141.5 lvl 2 search 273
+L 92 src  92 10x10 pins 2 knot - S13 C2 N0 score 142.6 lvl 2 search 461
+L 93 src  83 10x10 pins 0 knot - S6 C9 N0 score 142.9 lvl 2 search 1085
+L 94 src 100 10x10 pins 1 knot - S11 C4 N3 score 143 lvl 2 search 2243
+L 95 src 117 10x10 pins 0 knot - S10 C5 N0 score 144.6 lvl 2 search 10433
+L 96 src  70 10x10 pins 3 knot - S11 C3 N0 score 144.7 lvl 1 search 0
+L 97 src  95 10x10 pins 3 knot - S11 C5 N0 score 145.4 lvl 1 search 0
+L 98 src  80 10x10 pins 0 knot - S11 C6 N3 score 145.9 lvl 2 search 2787
+L 99 src 112 10x10 pins 0 knot - S11 C5 N0 score 147.8 lvl 2 search 6953
+L100 src  79 10x10 pins 2 knot - S11 C2 N0 score 149.3 lvl 2 search 3897
+L101 src 102 10x10 pins 1 knot - S19 C2 N0 score 151.6 lvl 2 search 443
+L102 src  99 10x10 pins 2 knot - S12 C3 N0 score 152.1 lvl 2 search 19907
+L103 src 120 10x10 pins 0 knot - S16 C3 N3 score 152.4 lvl 2 search 497
+L104 src  91 10x10 pins 0 knot - S14 C3 N0 score 153.1 lvl 2 search 1821
+L105 src 111 10x10 pins 2 knot - S18 C1 N0 score 153.3 lvl 2 search 1169
+L106 src 104 10x10 pins 0 knot - S17 C3 N2 score 153.9 lvl 2 search 445
+L107 src  96 10x10 pins 2 knot - S12 C3 N2 score 154.8 lvl 2 search 1111
+L108 src 110 10x10 pins 0 knot - S12 C5 N0 score 156.5 lvl 2 search 51
+L109 src  94 10x10 pins 0 knot - S12 C7 N0 score 160 lvl 2 search 533
+L110 src  85 10x10 pins 0 knot - S13 C4 N0 score 164.2 lvl 1 search 0
+L111 src 108 10x10 pins 3 knot - S12 C3 N0 score 164.8 lvl 2 search 3633
+L112 src 107 10x10 pins 3 knot - S13 C3 N0 score 165.8 lvl 1 search 0
+L113 src 114 10x10 pins 1 knot - S15 C4 N0 score 166.7 lvl 1 search 0
+L114 src 116 10x10 pins 2 knot - S8 C4 N3 score 167.9 lvl 2 search 19127
+L115 src 103 10x10 pins 3 knot - S13 C3 N0 score 171.5 lvl 1 search 0
+L116 src 113 10x10 pins 2 knot - S12 C3 N0 score 171.9 lvl 1 search 0
+L117 src 109 10x10 pins 2 knot - S11 C3 N0 score 174.7 lvl 2 search 445
+L118 src 118 10x10 pins 0 knot - S15 C3 N0 score 175.9 lvl 1 search 0
+L119 src  86 10x10 pins 2 knot - S11 C4 N0 score 179.7 lvl 2 search 347
+L120 src 115 10x10 pins 2 knot - S16 C1 N0 score 185.6 lvl 1 search 0

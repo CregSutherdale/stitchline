@@ -1,0 +1,176 @@
+
+CAMPAIGN  (count = solutions found by the independent DFS solver, must be 1)
+  id chapter     size pins knot  S  C  N   score  count regen rules  dfs-nodes
+   1 Calico        5x5    4   Y   0  0  0     0.4      1   ok   ok           28
+   2 Calico        5x5    4   Y   0  0  0     0.4      1   ok   ok           48
+   3 Calico        5x5    5   Y   0  0  0     0.4      1   ok   ok           29
+   4 Calico        5x5    4   -   0  0  0     0.4      1   ok   ok           79
+   5 Calico        5x5    0   Y   6  0  0     0.5      1   ok   ok          143
+   6 Calico        5x5    0   Y   5  0  0     0.5      1   ok   ok          135
+   7 Calico        5x5    0   Y   5  0  0     3.3      1   ok   ok          102
+   8 Calico        6x6    1   Y   6  0  0    10.5      1   ok   ok          400
+   9 Calico        6x6    0   Y   0  4  0     4.3      1   ok   ok          120
+  10 Calico        6x6    0   Y   9  1  0     0.7      1   ok   ok          184
+  11 Gingham       6x6    0   Y   0  3  0     3.6      1   ok   ok          146
+  12 Gingham       6x6    2   Y   0  2  0     3.9      1   ok   ok           68
+  13 Gingham       6x6    1   Y   3  1  0     4.6      1   ok   ok          481
+  14 Gingham       6x6    1   -   6  3  0     4.9      1   ok   ok          493
+  15 Gingham       6x6    0   Y   7  0  2     4.6      1   ok   ok          390
+  16 Gingham       7x7    0   Y   6  2  3     6.4      1   ok   ok         2810
+  17 Gingham       6x6    1   Y   3  1  0    16.2      1   ok   ok          311
+  18 Gingham       7x7    2   -   5  1  1    17.7      1   ok   ok         1743
+  19 Gingham       7x7    0   Y   6  0  3    19.1      1   ok   ok         2756
+  20 Gingham       6x6    0   Y   5  0  0    20.1      1   ok   ok          525
+  21 Chambray      7x7    0   -   5  2  0      21      1   ok   ok         3460
+  22 Chambray      7x7    1   -   5  2  0      21      1   ok   ok         8556
+  23 Chambray      7x7    0   -   7  1  0    24.3      1   ok   ok         3761
+  24 Chambray      7x7    0   -  11  0  0    29.5      1   ok   ok        10014
+  25 Chambray      8x8    0   -   9  3  0    29.5      1   ok   ok         9558
+  26 Chambray      7x7    1   -   3  2  0    34.9      1   ok   ok        13409
+  27 Chambray      7x7    1   -   6  1  0      37      1   ok   ok         4229
+  28 Chambray      7x7    2   -   9  0  0    39.4      1   ok   ok         1535
+  29 Chambray      9x9    1   -  13  1  0    40.1      1   ok   ok       233309
+  30 Chambray      8x8    0   Y   7  1  0    41.5      1   ok   ok        88763
+  31 Flannel       8x8    0   -   9  2  0    42.1      1   ok   ok       205822
+  32 Flannel       7x7    2   -   7  1  0    42.3      1   ok   ok          989
+  33 Flannel       9x9    2   -   8  3  0    44.4      1   ok   ok       173737
+  34 Flannel       9x9    1   Y  10  1  0    44.4      1   ok   ok       353575
+  35 Flannel       7x7    1   -   7  1  0    45.9      1   ok   ok         1542
+  36 Flannel       7x7    1   -   3  1  3      49      1   ok   ok        52311
+  37 Flannel       9x9    2   Y   5  4  0    49.1      1   ok   ok        41751
+  38 Flannel       8x8    2   Y   8  1  2    50.5      1   ok   ok        37654
+  39 Flannel     10x10    3   -  14  4  0    55.5      1   ok   ok       268625
+  40 Flannel       8x8    0   -   7  4  0    57.7      1   ok   ok        13336
+  41 Seersucker  10x10    1   Y  11  2  0    59.9      1   ok   ok      5558870
+  42 Seersucker    8x8    1   Y   8  2  0    60.5      1   ok   ok        31715
+  43 Seersucker    8x8    2   -  11  1  0    60.6      1   ok   ok        16362
+  44 Seersucker    9x9    2   -  10  4  0    60.6      1   ok   ok        56482
+  45 Seersucker    8x8    2   -   7  1  0    62.6      1   ok   ok       203062
+  46 Seersucker    8x8    0   -  10  2  0    65.1      1   ok   ok         9593
+  47 Seersucker    8x8    0   -  10  1  2      66      1   ok   ok        38914
+  48 Seersucker    8x8    0   -   8  3  0    66.8      1   ok   ok        20284
+  49 Seersucker    8x8    1   -   2  4  0    66.9      1   ok   ok        41042
+  50 Seersucker  10x10    1   Y   4  7  0    70.4      1   ok   ok      1685843
+  51 Corduroy      8x8    2   -   5  3  0    72.2      1   ok   ok         1809
+  52 Corduroy      8x8    2   -   2  4  0    72.5      1   ok   ok         5099
+  53 Corduroy      9x9    1   Y   8  2  0    73.4      1   ok   ok       779702
+  54 Corduroy      9x9    3   -   8  2  3    73.9      1   ok   ok        14982
+  55 Corduroy      8x8    0   -   5  6  0    81.5      1   ok   ok        12411
+  56 Corduroy      8x8    1   -   5  2  0    81.6      1   ok   ok        20965
+  57 Corduroy      9x9    3   -   8  4  0    82.7      1   ok   ok         8675
+  58 Corduroy      8x8    1   -   4  4  0      83      1   ok   ok        20691
+  59 Corduroy    10x10    2   -  14  2  0    85.2      1   ok   ok      2145783
+  60 Corduroy      9x9    1   -   8  4  0    88.1      1   ok   ok       398069
+  61 Tweed       10x10    0   Y  16  2  0    88.1      1   ok   ok      3895680
+  62 Tweed         9x9    1   Y  10  1  3    89.3      1   ok   ok       375509
+  63 Tweed         8x8    3   -   5  2  0    90.2      1   ok   ok        31387
+  64 Tweed         9x9    3   -   6  3  0    92.6      1   ok   ok       686724
+  65 Tweed         9x9    0   -  10  4  0      93      1   ok   ok       598518
+  66 Tweed         8x8    0   Y  11  1  2    94.1      1   ok   ok        19306
+  67 Tweed         9x9    1   -   9  5  0    98.9      1   ok   ok        89974
+  68 Tweed       10x10    1   -  10  4  0    99.4      1   ok   ok     27098148
+  69 Tweed       10x10    2   Y  11  2  2   102.3      1   ok   ok       961295
+  70 Tweed         9x9    0   Y  11  3  2   103.3      1   ok   ok        97315
+  71 Damask      10x10    2   Y  18  1  0   105.3      1   ok   ok       284934
+  72 Damask        9x9    2   -   8  4  0   112.2      1   ok   ok        59822
+  73 Damask        8x8    0   -   8  2  0   116.2      1   ok   ok       142326
+  74 Damask      10x10    0   Y  15  3  0     117      1   ok   ok      4384220
+  75 Damask      10x10    0   -  17  3  0   117.3      1   ok   ok      1650857
+  76 Damask        9x9    3   -  10  1  3   121.3      1   ok   ok       128898
+  77 Damask        9x9    2   -  12  2  0   123.5      1   ok   ok        60880
+  78 Damask        9x9    2   -  11  2  2   124.5      1   ok   ok       111142
+  79 Damask      10x10    0   -  18  2  3   124.6      1   ok   ok      2731439
+  80 Damask      10x10    0   -  18  2  0   125.4      1   ok   ok      4266341
+  81 Brocade     10x10    1   -  11  5  0   127.6      1   ok   ok      3003449
+  82 Brocade       9x9    1   -   6  4  0   131.4      1   ok   ok        97310
+  83 Brocade     10x10    0   -  18  2  0   132.3      1   ok   ok      1579658
+  84 Brocade     10x10    1   -  10  4  0   133.6      1   ok   ok     14254692
+  85 Brocade     10x10    0   Y  15  1  0   133.8      1   ok   ok      4740036
+  86 Brocade     10x10    1   -  11  4  0   136.6      1   ok   ok      4300529
+  87 Brocade     10x10    0   -  21  3  0   138.9      1   ok   ok       243950
+  88 Brocade     10x10    0   -  18  2  3   138.9      1   ok   ok      6161226
+  89 Brocade       9x9    0   -   9  3  0   139.8      1   ok   ok      1027519
+  90 Brocade     10x10    2   -  15  3  0   140.5      1   ok   ok      1479731
+  91 Velvet      10x10    0   -  15  4  0   141.5      1   ok   ok       930905
+  92 Velvet      10x10    2   -  13  2  0   142.6      1   ok   ok     22585085
+  93 Velvet      10x10    0   -   6  9  0   142.9      1   ok   ok      1092496
+  94 Velvet      10x10    1   -  11  4  3     143      1   ok   ok      2427578
+  95 Velvet      10x10    0   -  10  5  0   144.6      1   ok   ok     20914346
+  96 Velvet      10x10    3   -  11  3  0   144.7      1   ok   ok      1155718
+  97 Velvet      10x10    3   -  11  5  0   145.4      1   ok   ok      1481875
+  98 Velvet      10x10    0   -  11  6  3   145.9      1   ok   ok       862603
+  99 Velvet      10x10    0   -  11  5  0   147.8      1   ok   ok     12271678
+ 100 Velvet      10x10    2   -  11  2  0   149.3      1   ok   ok     34106817
+ 101 Tartan      10x10    1   -  19  2  0   151.6      1   ok   ok      1306309
+ 102 Tartan      10x10    2   -  12  3  0   152.1      1   ok   ok     19048905
+ 103 Tartan      10x10    0   -  16  3  3   152.4      1   ok   ok      1507801
+ 104 Tartan      10x10    0   -  14  3  0   153.1      1   ok   ok      6187179
+ 105 Tartan      10x10    2   -  18  1  0   153.3      1   ok   ok       768645
+ 106 Tartan      10x10    0   -  17  3  2   153.9      1   ok   ok       678210
+ 107 Tartan      10x10    2   -  12  3  2   154.8      1   ok   ok      1734660
+ 108 Tartan      10x10    0   -  12  5  0   156.5      1   ok   ok       867617
+ 109 Tartan      10x10    0   -  12  7  0     160      1   ok   ok       150737
+ 110 Tartan      10x10    0   -  13  4  0   164.2      1   ok   ok     16717873
+ 111 Silk        10x10    3   -  12  3  0   164.8      1   ok   ok      1045249
+ 112 Silk        10x10    3   -  13  3  0   165.8      1   ok   ok      2029763
+ 113 Silk        10x10    1   -  15  4  0   166.7      1   ok   ok      1043034
+ 114 Silk        10x10    2   -   8  4  3   167.9      1   ok   ok      1486653
+ 115 Silk        10x10    3   -  13  3  0   171.5      1   ok   ok      1205412
+ 116 Silk        10x10    2   -  12  3  0   171.9      1   ok   ok      8235816
+ 117 Silk        10x10    2   -  11  3  0   174.7      1   ok   ok       675259
+ 118 Silk        10x10    0   -  15  3  0   175.9      1   ok   ok      6963138
+ 119 Silk        10x10    2   -  11  4  0   179.7      1   ok   ok      4642486
+ 120 Silk        10x10    2   -  16  1  0   185.6      1   ok   ok      2067701
+
+DAILY STITCH (30 date seeds)
+  2026-10-06 9x9 pins 3 knot Y S5 C3 N3 score   49.7 solutions 1
+  2026-10-07 8x8 pins 1 knot - S10 C0 N0 score   89.2 solutions 1
+  2026-10-08 9x9 pins 1 knot - S5 C5 N2 score  190.2 solutions 1
+  2026-10-09 8x8 pins 0 knot Y S6 C3 N2 score   26.6 solutions 1
+  2026-10-10 8x8 pins 0 knot Y S6 C2 N3 score    5.5 solutions 1
+  2026-10-11 9x9 pins 3 knot - S7 C3 N3 score  158.1 solutions 1
+  2026-10-12 8x8 pins 1 knot - S7 C2 N3 score  104.5 solutions 1
+  2026-10-13 9x9 pins 1 knot - S4 C6 N2 score   97.8 solutions 1
+  2026-10-14 8x8 pins 1 knot - S8 C2 N2 score  127.1 solutions 1
+  2026-10-15 9x9 pins 3 knot - S10 C1 N0 score   65.3 solutions 1
+  2026-10-16 8x8 pins 0 knot Y S9 C0 N3 score   79.9 solutions 1
+  2026-10-17 9x9 pins 0 knot Y S11 C1 N3 score   98.7 solutions 1
+  2026-10-18 8x8 pins 2 knot - S6 C2 N2 score   73.4 solutions 1
+  2026-10-19 9x9 pins 1 knot - S9 C2 N4 score  143.8 solutions 1
+  2026-10-20 9x9 pins 1 knot Y S11 C0 N2 score   96.4 solutions 1
+  2026-10-21 8x8 pins 2 knot Y S7 C1 N0 score   25.2 solutions 1
+  2026-10-22 9x9 pins 2 knot - S11 C3 N0 score  106.2 solutions 1
+  2026-10-23 8x8 pins 2 knot - S7 C2 N0 score   18.1 solutions 1
+  2026-10-24 9x9 pins 1 knot Y S12 C1 N0 score   44.7 solutions 1
+  2026-10-25 8x8 pins 2 knot - S7 C2 N2 score   87.6 solutions 1
+  2026-10-26 9x9 pins 1 knot - S14 C1 N3 score  221.4 solutions 1
+  2026-10-27 8x8 pins 0 knot - S7 C2 N2 score    156 solutions 1
+  2026-10-28 9x9 pins 3 knot - S8 C2 N0 score  162.4 solutions 1
+  2026-10-29 8x8 pins 0 knot - S9 C1 N3 score    128 solutions 1
+  2026-10-30 8x8 pins 3 knot Y S4 C2 N0 score   18.3 solutions 1
+  2026-10-31 9x9 pins 0 knot - S12 C1 N4 score  158.2 solutions 1
+  2026-11-01 9x9 pins 0 knot Y S10 C1 N0 score   90.2 solutions 1
+  2026-11-02 8x8 pins 1 knot - S10 C1 N0 score   33.7 solutions 1
+  2026-11-03 9x9 pins 3 knot - S9 C1 N2 score   98.1 solutions 1
+  2026-11-04 8x8 pins 0 knot - S6 C3 N2 score   66.6 solutions 1
+
+DIFFICULTY CURVE (chapter mean of measured solver score)
+  ch 1 Calico         2.1  #
+  ch 2 Gingham       10.1  ###
+  ch 3 Chambray      31.8  ########
+  ch 4 Flannel       48.1  ############
+  ch 5 Seersucker    63.9  ################
+  ch 6 Corduroy      79.4  ####################
+  ch 7 Tweed         95.1  ########################
+  ch 8 Damask       118.7  ##############################
+  ch 9 Brocade      135.3  ##################################
+  ch10 Velvet       144.8  ####################################
+  ch11 Tartan       155.2  #######################################
+  ch12 Silk         172.4  ###########################################
+  chapter means strictly rising: YES
+  Spearman rank correlation (score vs level order): 1.000  (gate >= 0.90)
+  drops in score after level 21: 0  (gate 0)
+  level 40: score 57.7, 8x8; hardest: 185.6
+
+150 puzzles checked in 231s on 11 workers
+GATE 1 PASS: 150/150 unique, regenerated exactly, difficulty rises
