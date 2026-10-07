@@ -4,7 +4,8 @@
 
 ## State (2026-10-07): v2 SHIPPED (round 2)
 - 180-level campaign (16 chapters), Daily Stitch (hard band, streak calendar), Endless, Quilt Chest with sewn 3x3 quilts + reveal, Sewing box (thread/fabric unlocks by stars), Stats page, clock modes, PWA offline.
-- New clues: **needle's eye** (pass straight through, travelling the arrow's way: global direction deductions) taught at L121; **seams** (cross exactly N times: counting/parity deductions) taught at L126.
+- New clues: **needle's eye** (pass straight through, travelling the arrow's way: global direction deductions) taught at L121; **seams** (cross exactly N times: counting/parity deductions) taught at L126. Chapters 13-16 hold 15 levels each (`chapterOf`/`chapterRange` in campaign.js).
+- Live verified 2026-10-07: build 07c818a443; play test 12/12, migration 17/17 and offline load all pass against the live URL. Kyle said STOP after round 2: no round 3 unless asked.
 - Save: storage key stays `stitchline.v1`; schema `v: 2`. `store.migrate()` is pure and idempotent; a raw pre-migration copy is kept once in `stitchline.backup.v1`. Never renumber levels 1-120 (saves key on level id); gate 1 checks they are byte-identical to `tests/fixtures/campaign_v1_120.json`.
 
 ## Gates (all must pass before deploy)
